@@ -1,0 +1,42 @@
+# CrypTrade configuration — copy to config.yaml and edit.
+# Secrets are NOT stored here; put API keys in a .env file (see .env.example).
+
+exchange:
+  id: bybit                 # ccxt exchange id. bybit / binanceusdm are low-fee.
+  market: "BTC/USDT:USDT"   # USDT-margined perpetual futures symbol
+  timeframe: "15m"          # 5m / 15m / 1h ...
+  testnet: true             # KEEP true until you have proven the bot on paper
+
+mode: paper                 # paper | backtest | live
+
+account:
+  currency: "RM"
+  initial_capital: 400.0    # your RM400
+  usd_per_currency: 0.21    # display only
+
+strategy:
+  min_confidence: 0.55      # raise for fewer, higher-quality trades
+  adx_trend_min: 18         # only trade when a trend exists
+  ema_fast: 9
+  ema_slow: 21
+  ema_trend: 50
+  rsi_period: 14
+  atr_period: 14
+
+risk:
+  leverage: 5               # 5x per requirement
+  max_leverage_used: 5      # cap on notional / equity
+  risk_per_trade: 0.02      # risk 2% of equity per trade (compounds w/ equity)
+  atr_stop_mult: 1.5        # stop distance = 1.5 * ATR
+  reward_risk: 1.8          # take-profit = 1.8 * risk
+  daily_profit_target: 40.0 # RM — hit this and the bot stops for the day
+  daily_loss_limit: 40.0    # RM — hit this and the bot stops to protect capital
+  maint_margin_rate: 0.005
+
+fees:
+  taker: 0.00055            # check YOUR exchange's actual fee tier
+  maker: 0.0002
+
+loop:
+  poll_seconds: 30
+  candles: 200
